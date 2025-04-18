@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  pimcore:
+    image: pimcore/pimcore:php8.3-v3.6
+    container_name: pimcore
+    ports:
+      - "${PIMCORE_PORT}:80"
+    volumes:
+      - pimcore_app:/var/www/html
+    environment:
+      - DB_HOST=${PIMCORE_DB_HOST}
+      - DB_PORT=${PIMCORE_DB_PORT}
+      - DB_NAME=${PIMCORE_DB_NAME}
+      - DB_USER=${PIMCORE_DB_USER}
+      - DB_PASSWORD=${PIMCORE_DB_PASSWORD}
+    restart: unless-stopped
+
+volumes:
+  pimcore_app:

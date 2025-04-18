@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    container_name: synapse
+    ports:
+      - "${MATRIX_SYNAPSE_PORT}:8008"
+    volumes:
+      - synapse_data:/data
+    environment:
+      - SYNAPSE_SERVER_NAME=${MATRIX_DOMAIN}
+      - SYNAPSE_REPORT_STATS=${MATRIX_REPORT_STATS}
+    restart: unless-stopped
+
+  element:
+    image: vectorim/element-web:latest
+    container_name: element
+    ports:
+      - "${ELEMENT_PORT}:80"
+    volumes:
+      - ./element/config.json:/app/config.json
+    restart: unless-stopped
+
+volumes:
+  synapse_data:
